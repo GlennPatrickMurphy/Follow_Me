@@ -8,6 +8,7 @@
 ### Hardward and Software Used ###  
 
 Keras, high level deep learning API for tensor flow
+
 Amazons Web Services for GPU
 
 
@@ -44,12 +45,10 @@ The difference between a Fully Connnected Neural Network and an FCN is that the 
 
 ### Encoder ###
 
-Creates a separable convolutional layer using an input layer and size of filters 
-encoder extracts features that will later be used by the decoder. The encoder layers are the pretrained model. 
-seperable convolutions is a technique used that reduces the number of parameters needed thus increases efficiency
+The encoder is the first section of the FCN, the encoder extracts features that will later be used by the decoder. The encoder is the portion which reduces to a 1x1 convolutional layer. The FCN created in this project includes separable convolution layers using the previous layer and filter depth. Seperable convolutions is a technique used that reduces the number of parameters needed thus increases efficiency, and reducing overfitting. Initially I started the project with only two convolution layers, I added a third layer on the 3rd trail in attempt to increase the IOU score (defined later).   
 
 ### 1X1 Convolution ###
-By replacing the fully connected layers with a 1x1 convolutional layer a series of unsampleing through transposed convolutional layers is used to get to the output layer. This series of layers is known as the Decoder layer. Below
+
 Output of convolutional layer is a 4D tensor feedin this through a fully connected layer flattens it into a 2D tensor , spatial information is lost. This is avoided through 1x1 convolutions. 1x1 convolution layer reduces dimensionalit of the layer. A benefit of the 1x1 convolutional layer is that you can test images of any size.  
 batch normalization - normalizes each layer's inputs by using mean and variabce of the values in the current mini batch. Advantages of this are train fater and faster convergence. Allows high learning rate . Simplifies creation fo deeper networks and provides a bit of regulation
 
@@ -64,6 +63,36 @@ layer concatenation is a way to carry ouyt skip connections. Concateting two lay
 
 ## Results ##
 ### Hyper Parameters ###
+Below was the initial settings to the hyper parameters:
+```python
+learning_rate =0.001
+batch_size =120
+num_epochs = 10
+steps_per_epoch = 200
+validation_steps = 20
+workers = 2
+```
+These were selected from the previous lab completed. Below is a table outlining the different trails, changes in parameters and their respected results. Results were scored as IOU, the intersection set over union set, it gives an idea of how well the classification handles ever single pixel.
+
+| Trail         | Changes       | Result (IOU)|
+| ------------- |:-------------:| -----:|
+| 1    | Initial setup, 2 Convolution Layers|0.38 |
+| 2    | Batch size=200, Validation Steps=50      |0.40 |
+| 3    | Batch size=16, Validation Steps=200   |0.35 |
+| 4    | 3 Convolution Layers |0.35 |
+| 5    | Learning rate = 0.003 |0.32 |
+| 6    | Batch size=32, Epochs=15 |0.40 |
+
+Final settings : 
+```python 
+learning_rate =0.003
+batch_size =32
+num_epochs = 15
+steps_per_epoch = 500
+validation_steps = 200
+workers = 2
+```
+
 ![Training Curves](https://github.com/GlennPatrickMurphy/Follow_Me/blob/master/docs/Training_Curves.PNG)
 ![Segmentation](https://github.com/GlennPatrickMurphy/Follow_Me/blob/master/docs/Segmentation.PNG)
 ![IOU](https://github.com/GlennPatrickMurphy/Follow_Me/blob/master/docs/Score.PNG)
