@@ -49,26 +49,38 @@ The encoder is the first section of the FCN, the encoder extracts features that 
 
 ### 1X1 Convolution ###
 
-Output of convolutional layer is a 4D tensor feedin this through a fully connected layer flattens it into a 2D tensor , spatial information is lost. This is avoided through 1x1 convolutions. 1x1 convolution layer reduces dimensionalit of the layer. A benefit of the 1x1 convolutional layer is that you can test images of any size.  
-batch normalization - normalizes each layer's inputs by using mean and variabce of the values in the current mini batch. Advantages of this are train fater and faster convergence. Allows high learning rate . Simplifies creation fo deeper networks and provides a bit of regulation
+Output of convolutional layer is a 4D tensor, feeding this through a fully connected layer flattens it into a 2D tensor and spatial information is lost. This is avoided through 1x1 convolutions. 1x1 convolution layer reduces the dimensionality of the layer. A benefit of the 1x1 convolutional layer is that you can test images of any size.  
+
+ The encoder layers as well as the 1X1 convolution layer use a batch normalization. This normalizes each layer's inputs by using mean and variabce of the values in the current mini batch. The advantages of this are that the network can train faster and faster convergence, it allows for a high learning rate, and it simplifies creation for deeper networks.
 
 ### Decoder ### 
-For Decoders, reverses convolutions
-helps unsampling previous layer to desired resolution or dimension
-creates unsampleing layer using bilinear unsampling , has a layer of concatenation, 
-Bilinear Unsampling is the weighted average of nearest pixels located diagonally to a given pixel
-skip connections are used here, skip connections retain information. How they work is information from previous encoding layers or input skips adjacent layers and into the decoder or output layer. This creates more precise segmentation decisions as less information is lost.
-layer concatenation is a way to carry ouyt skip connections. Concateting two layers the upsampling layer and a layer with more spatial information. allows for more flexability as depth of input layers nee not match
+
+The decoder reverses convolutions and helps unsampling previous layer to desired resolution or dimension. The decoder creates the unsampleing layer using bilinear unsampling. Bilinear Unsampling is the weighted average of nearest pixels located diagonally to a given pixel.
+
+The skip connections are used here, skip connections are used to retain information. Skip connections use information from previous encoding layers or input,to skips adjacent layers and into the decoder or output layer. This creates more precise segmentation decisions as less information is lost. Layer concatenation is a way to carry ouyt skip connections. Concateting two layers the upsampling layer and a layer with more spatial information. This allows for more flexability as depth of input layers nee not match.
 
 
 ## Results ##
 ### Hyper Parameters ###
+
+Learning rate: Controls the rate at which the weight and bias changes during training
+
+Batch size : number of training samples/images that get propagated through the network in a single pass. 
+
+epochs: number of times the entire training set and data set gets propagated through the network. its is a single forward and backward pass of the whole data set. It used to increase accuracy of the model without requiring more data
+
+steps per epoch: number of batches of training images that travel through the network for 1 epoch 
+
+validation steps: number of batches of validation images that go through network for 1 epoch 
+
+workers: max number of process to spin up 
+
 Below was the initial settings to the hyper parameters:
 ```python
 learning_rate =0.001
 batch_size =120
 num_epochs = 10
-steps_per_epoch = 200
+steps_per_epoch = 500
 validation_steps = 20
 workers = 2
 ```
@@ -92,11 +104,16 @@ steps_per_epoch = 500
 validation_steps = 200
 workers = 2
 ```
-
 ![Training Curves](https://github.com/GlennPatrickMurphy/Follow_Me/blob/master/docs/Training_Curves.PNG)
 ![Segmentation](https://github.com/GlennPatrickMurphy/Follow_Me/blob/master/docs/Segmentation.PNG)
 ![IOU](https://github.com/GlennPatrickMurphy/Follow_Me/blob/master/docs/Score.PNG)
 
+## Conclusion ##
+
+Changing the Batch size was extremly important in reducing the time to train the model. Although it reduced the IOU score, it proved beneficial in further developing the model by having the time to change other parameters. The increase of the learning rate to 0.003 showed to converge to quickly, as the score was extremely low for this trial. From the small design of experiments that I completed on this FCN, it seemed that the Batch size and learning rate had the biggest effect on the FCN. 
+
 ## Future Enhancements ##
+
+It was talked about in the lesson, but training multiple decoders for different tasks would be interesting. Although it wouldnt help with recongizing the target, I think if this project asked to control the quadrocopter, having 2 decoders trained to view the scene and depth could help with decision making. 
 
 
