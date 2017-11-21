@@ -48,7 +48,7 @@ Intersection of union, gives and idea of how well the classification handles eve
 ### Hyper Parameters ###
 ![Training Curves](https://github.com/GlennPatrickMurphy/Follow_Me/blob/master/docs/Training_Curves.png)
 ![Segmentation](https://github.com/GlennPatrickMurphy/Follow_Me/blob/master/docs/Segmentation.png)
-![IOU](https://github.com/GlennPatrickMurphy/Follow_Me/blob/master/docs/Score.png)
+![IOU](https://github.com/GlennPatrickMurphy/Follow_Me/blob/master/docs/Score.PNG)
 
 ## Future Enhancements ##
 
