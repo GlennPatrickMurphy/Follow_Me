@@ -13,25 +13,24 @@ AWS
 
 ![FCN Diagram](https://github.com/GlennPatrickMurphy/Follow_Me/blob/master/docs/FCN_Diagram.PNG)
 
-'''python
+```python
+def fcn_model(inputs, num_classes):
 
-    def fcn_model(inputs, num_classes):
-
-        # TODO Add Encoder Blocks. 
-        # Remember that with each encoder layer, the depth of your model (the number of filters) increases.
-        conv_layer1=encoder_block(inputs,filters=32,strides=1)
-        conv_layer2=encoder_block(conv_layer1,filters=64,strides=1)
-        conv_layer3=encoder_block(conv_layer2,filters=128,strides=1)
-        # TODO Add 1x1 Convolution layer using conv2d_batchnorm().
+    # TODO Add Encoder Blocks. 
+    # Remember that with each encoder layer, the depth of your model (the number of filters) increases.
+    conv_layer1=encoder_block(inputs,filters=32,strides=1)
+    conv_layer2=encoder_block(conv_layer1,filters=64,strides=1)
+    conv_layer3=encoder_block(conv_layer2,filters=128,strides=1)
+    # TODO Add 1x1 Convolution layer using conv2d_batchnorm().
         concat_layer=conv2d_batchnorm(conv_layer3,filters=256,kernel_size=3,strides=1)
-        # TODO: Add the same number of Decoder Blocks as the number of Encoder Blocks
-        deco_layer1=decoder_block(concat_layer,conv_layer2,filters=128)
-        deco_layer2=decoder_block(deco_layer1,conv_layer1,filters=64)
-        output_layer=decoder_block(deco_layer2,inputs,filters=32)
+    # TODO: Add the same number of Decoder Blocks as the number of Encoder Blocks
+    deco_layer1=decoder_block(concat_layer,conv_layer2,filters=128)
+    deco_layer2=decoder_block(deco_layer1,conv_layer1,filters=64)
+    output_layer=decoder_block(deco_layer2,inputs,filters=32)
 
-        # The function returns the output layer of your model. "x" is the final layer obtained from the last decoder_block()
-        return layers.Conv2D(num_classes, 3, activation='softmax', padding='same')(output_layer)
-'''
+    # The function returns the output layer of your model. "x" is the final layer obtained from the last decoder_block()
+    return layers.Conv2D(num_classes, 3, activation='softmax', padding='same')(output_layer)
+```
 
 ### FCN Overview ###
 
