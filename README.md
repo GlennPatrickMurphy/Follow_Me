@@ -104,8 +104,11 @@ steps_per_epoch = 500
 validation_steps = 200
 workers = 2
 ```
+Training Curve 
 ![Training Curves](https://github.com/GlennPatrickMurphy/Follow_Me/blob/master/docs/Training_Curves.PNG)
+Sematic Segmentation Photo (Sample Photo, Validation Photo, FCN Photo)
 ![Segmentation](https://github.com/GlennPatrickMurphy/Follow_Me/blob/master/docs/Segmentation.PNG)
+Score
 ![IOU](https://github.com/GlennPatrickMurphy/Follow_Me/blob/master/docs/Score.PNG)
 
 ## Conclusion ##
